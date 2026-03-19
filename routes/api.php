@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\LikesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
@@ -24,6 +25,12 @@ Route::prefix('v1')->group(function () {
     Route::prefix('comments')->group(function () {
         Route::post('/', [CommentsController::class, 'store']);
         Route::delete('/{id}', [CommentsController::class, 'destroy']);
+    });
+
+    // handle likes
+    Route::prefix('likes')->group(function(){
+        Route::post('/', [LikesController::class, 'store']);
+        Route::delete('/{id}', [LikesController::class, 'destroy']);
     });
 });
 
