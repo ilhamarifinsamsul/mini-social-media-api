@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\MessagesController;
 use Illuminate\Http\Request;
@@ -11,8 +12,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-
 Route::prefix('v1')->group(function () {
+    // handle route api registe dan login
+    Route::post('register', [JWTAuthController::class, 'register']);
     // handle route post
     Route::prefix('posts')->group(function () {
      Route::get('/', [PostsController::class, 'index']); // Menampilkan semua data
