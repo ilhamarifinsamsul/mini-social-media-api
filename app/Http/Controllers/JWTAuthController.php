@@ -39,8 +39,8 @@ class JWTAuthController extends Controller
     // handling login
     public function login(Request $request){
         // validasi
-        $validator = Validator::make($request->all(),[
-            'email' => 'required|email',
+        $request->validate([
+            'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
         // panggil request email dan password
