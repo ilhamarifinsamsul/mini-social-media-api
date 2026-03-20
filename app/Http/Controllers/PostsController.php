@@ -11,7 +11,7 @@ class PostsController extends Controller
 {
     // Function index
     public function index() {
-        $posts = Post::all();
+        $posts = Post::with('user', 'comments', 'likes')->get();
 
         return response()->json([
             'data' => $posts,
