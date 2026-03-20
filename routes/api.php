@@ -7,6 +7,7 @@ use App\Http\Controllers\MessagesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
+use App\Http\Middleware\JWTMiddleware;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -17,7 +18,7 @@ Route::prefix('v1')->group(function () {
     Route::post('register', [JWTAuthController::class, 'register']);
     Route::post('login', [JWTAuthController::class, 'login']);
     // handle route post
-    Route::prefix('posts')->group(function () {
+    Route::middleware(JWTMiddleware::class)->prefix('posts')->group(function () {
      Route::get('/', [PostsController::class, 'index']); // Menampilkan semua data
      Route::post('/', [PostsController::class, 'store']); // Menambahkan data
      Route::get('/{id}', [PostsController::class, 'show']); // Menampilkan data berdasarkan id
@@ -26,19 +27,19 @@ Route::prefix('v1')->group(function () {
     });
 
     // handle comments
-    Route::prefix('comments')->group(function () {
+    Route::middleware(JWTMiddleware::class)->prefix('comments')->group(function () {
         Route::post('/', [CommentsController::class, 'store']);
         Route::delete('/{id}', [CommentsController::class, 'destroy']);
     });
 
     // handle likes
-    Route::prefix('likes')->group(function(){
+    Route::middleware(JWTMiddleware::class)->prefix('likes')->group(function(){
         Route::post('/', [LikesController::class, 'store']);
         Route::delete('/{id}', [LikesController::class, 'destroy']);
     });
 
     // handle messages
-    Route::prefix('messages')->group(function(){
+    Route::middleware(JWTMiddleware::class)->prefix('messages')->group(function(){
         Route::post('/', [MessagesController::class, 'store']);
         Route::get('/{id}', [MessagesController::class, 'show']);
         // route melihat pesan berdasarkan user
