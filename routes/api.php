@@ -15,6 +15,7 @@ Route::get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
     // handle route api registe dan login
     Route::post('register', [JWTAuthController::class, 'register']);
+    Route::post('login', [JWTAuthController::class, 'login']);
     // handle route post
     Route::prefix('posts')->group(function () {
      Route::get('/', [PostsController::class, 'index']); // Menampilkan semua data
